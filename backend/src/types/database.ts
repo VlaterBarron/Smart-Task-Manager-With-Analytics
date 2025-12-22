@@ -6,3 +6,6 @@ export type Enums<T extends keyof Database['public']['Enums']> = Database['publi
 export type User = Tables<'User'>;
 export type Task = Tables<'Task'>;
 export type Category = Tables<'Category'>;
+
+export type TaskInsert = Database['public']['Tables']['Task']['Insert'];
+export type TaskUpdate = Database['public']['Tables']['Task']['Update'];
