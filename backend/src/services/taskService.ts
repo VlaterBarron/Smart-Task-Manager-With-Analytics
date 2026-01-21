@@ -12,7 +12,7 @@ export const getAllTasks = async (): Promise<Task[]> => {
     return data;
 };
 
-export const getTaskById = async (id : string): Promise<Task> => {
+export const getTaskById = async (id : number): Promise<Task> => {
 
   const { data, error } = await supabase.from('Task').select('*').eq('id', id).single();
 
@@ -35,7 +35,7 @@ export const createTask = async (taskData : TaskInsert): Promise<Task> => {
 
 };
 
-export const updateTaskById = async (id : string, taskData : TaskUpdate) : Promise<Task> => {
+export const updateTaskById = async (id : number, taskData : TaskUpdate) : Promise<Task> => {
 
   const { data, error } = await supabase.from('Task').update(taskData).eq('id', id).select().single();
 
@@ -47,7 +47,7 @@ export const updateTaskById = async (id : string, taskData : TaskUpdate) : Promi
 
 };
 
-export const deleteTaskById = async (id : string) : Promise<Task> => {
+export const deleteTaskById = async (id : number) : Promise<Task> => {
 
    const { data, error } = await supabase.from('Task').delete().eq('id', id).select().single();
 
