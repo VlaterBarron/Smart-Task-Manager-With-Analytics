@@ -3,10 +3,11 @@ import type { Request, Response } from "express";
 import type { Task, TaskInsert, TaskUpdate } from "../types/database.ts";
 import { getAllTasks, createTask, updateTaskById, getTaskById, deleteTaskById } from "../services/taskService.ts";
 import { RequestValidation } from "../utils/validations.ts";
+import { validateAuth } from "../middleware/validateAuth.ts";
 
 const taskRouter = Router();
 
-taskRouter.get('/', async (_, res:Response) => {
+taskRouter.get('/', validateAuth, async (_, res:Response) => {
 
     try {
 
@@ -20,14 +21,14 @@ taskRouter.get('/', async (_, res:Response) => {
     }
 });
 
-taskRouter.post('/', async (req:Request, res:Response) => {
+taskRouter.post('/', validateAuth, async (req:Request, res:Response) => {
 
     if(!RequestValidation.validateTaskBody(req)) {
         return res.status(400).json({error : "Syntax error in task request body"});
     }
 
     const newTask : TaskInsert = req.body;
-
+    newTask.user_id = req.user!.id;
 
     try {
         const createdTask = await createTask(newTask);
@@ -40,7 +41,7 @@ taskRouter.post('/', async (req:Request, res:Response) => {
 
 });
 
-taskRouter.get('/:id', async (req:Request, res:Response) => {
+taskRouter.get('/:id', validateAuth, async (req:Request, res:Response) => {
 
     const taskId = req.params.id;
 
@@ -49,7 +50,7 @@ taskRouter.get('/:id', async (req:Request, res:Response) => {
     }
     
     try {
-        const fetchedTask = await getTaskById(taskId);
+        const fetchedTask = await getTaskById(parseInt(taskId));
         
         res.status(200).json(fetchedTask);
 
@@ -60,13 +61,15 @@ taskRouter.get('/:id', async (req:Request, res:Response) => {
 
 });
 
-taskRouter.patch('/:id', async (req:Request, res:Response) => {
+taskRouter.patch('/:id', validateAuth, async (req:Request, res:Response) => {
 
-    const taskId = req.params.id;
+    const paramsId = req.params.id;
 
-    if(!taskId) {
+    if(!paramsId) {
         return res.status(400).json({error : "Syntax error on patching task. ID of the task is null"});
     }
+
+    const taskId = parseInt(paramsId);
 
     try {
 
@@ -94,13 +97,15 @@ taskRouter.patch('/:id', async (req:Request, res:Response) => {
 
 });
 
-taskRouter.delete('/:id', async (req:Request, res:Response) => {
+taskRouter.delete('/:id', validateAuth, async (req:Request, res:Response) => {
 
-    const taskId = req.params.id;
+    const paramsId = req.params.id;
 
-    if(!taskId) {
+    if(!paramsId) {
         return res.status(400).json({error : "Syntax error on patching task. ID of the task is null"});
     }
+
+    const taskId = parseInt(paramsId);
 
     try {
 

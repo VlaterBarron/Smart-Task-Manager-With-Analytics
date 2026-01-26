@@ -15,16 +15,17 @@ export const getAllTasks = async (): Promise<Task[]> => {
 export const getTaskById = async (id : number): Promise<Task> => {
 
   const { data, error } = await supabase.from('Task').select('*').eq('id', id).single();
-
+  
   if (error) {
       throw new Error(`Supabase Error: ${error.message}`);
-    };
+  };
 
   return data;
 
 };
 
 export const createTask = async (taskData : TaskInsert): Promise<Task> => {
+
     const { data, error } = await supabase.from('Task').insert(taskData).select().single();
 
     if (error) {

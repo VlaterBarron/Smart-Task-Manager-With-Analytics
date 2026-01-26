@@ -27,5 +27,5 @@ export const signIn = async ({ email, password }: LoginRequest) => {
     password
   });
   if (error) throw error;
-  return data;
+  return data.session.access_token;
 };
