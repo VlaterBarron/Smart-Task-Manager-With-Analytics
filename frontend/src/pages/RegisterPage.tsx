@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { supabase } from "../config/supabase.ts";
-import type { IRegister } from "./../types/register.ts";
+import type { IRegister } from "./../types/auth.ts";
 import type { IRegisterErrors } from "../types/errors.ts";
 import { VALID_EMAIL, VALID_PASSWORD } from "../utils/Validations.ts";
 import { Input } from "../components/Input.tsx";

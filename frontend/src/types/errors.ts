@@ -6,6 +6,12 @@ interface IRegisterErrors {
     confirmPasswordError ?: string
 };
 
+interface ILoginErrors {
+    emailError ?: string,
+    passwordError ?: string
+};
+
 export type {
-    IRegisterErrors
+    IRegisterErrors,
+    ILoginErrors
 }
