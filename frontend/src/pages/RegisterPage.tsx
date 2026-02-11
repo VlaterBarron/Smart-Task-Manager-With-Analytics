@@ -3,6 +3,7 @@ import { supabase } from "../config/supabase.ts";
 import type { IRegister } from "./../types/register.ts";
 import type { IRegisterErrors } from "../types/errors.ts";
 import { VALID_EMAIL, VALID_PASSWORD } from "../utils/Validations.ts";
+import { Input } from "../components/Input.tsx";
 
 export const RegisterPage = () => {
     const PASSWORD_LENGTH = 8;
@@ -107,46 +108,46 @@ export const RegisterPage = () => {
                     <h1>Regístrate a SmartTasks</h1>
                 </div>
                 <div>
-                    <p>Primer Nombre</p>
-                    <input 
-                        type="text" 
+                    <Input 
+                        title="Primer Nombre"
+                        type="text"
+                        placeholder="Ingresa tu primer nombre"
+                        value={form.firstname}
                         onChange={(e) => setForm(f => ({...f, firstname:e.target.value}))}
+                        inputError={errors.firstnameError}
                     />
-                    {
-                        errors.firstnameError && <p>{errors.firstnameError}</p>
-                    }
-                    <p>Segundo Nombre</p>
-                    <input 
-                        type="text" 
+                    <Input 
+                        title="Apellido"
+                        type="text"
+                        placeholder="Ingresa tu apellido"
+                        value={form.lastname}
                         onChange={(e) => setForm(f => ({...f, lastname:e.target.value}))}
+                        inputError={errors.lastnameError}
                     />
-                    {
-                        errors.lastnameError && <p>{errors.lastnameError}</p>
-                    }
-                    <p>Correo electrónico</p>
-                    <input 
-                        type="email" 
+                    <Input 
+                        title="Email"
+                        type="email"
+                        placeholder="Ingresa tu correo electrónico"
+                        value={form.email}
                         onChange={(e) => setForm(f => ({...f, email:e.target.value}))}
+                        inputError={errors.emailError}
                     />
-                    {
-                        errors.emailError && <p>{errors.emailError}</p>
-                    }
-                    <p>Contraseña</p>
-                    <input 
-                        type="password" 
+                    <Input 
+                        title="Contraseña"
+                        type="password"
+                        placeholder="Ingresa tu contraseña"
+                        value={form.password}
                         onChange={(e) => setForm(f => ({...f, password:e.target.value}))}
+                        inputError={errors.passwordError}
                     />
-                    {
-                        errors.passwordError && <p>{errors.passwordError}</p>
-                    }
-                    <p>Confirma tu contraseña</p>
-                    <input 
-                        type="password" 
+                    <Input 
+                        title="Confirmar contraseña"
+                        type="password"
+                        placeholder="Confirma tu contraseña"
+                        value={form.confirmPassword}
                         onChange={(e) => setForm(f => ({...f, confirmPassword:e.target.value}))}
+                        inputError={errors.confirmPasswordError}
                     />
-                    {
-                        errors.confirmPasswordError && <p>{errors.confirmPasswordError}</p>
-                    }
                 </div>
                 <button>Registrarse</button>
             </form>
