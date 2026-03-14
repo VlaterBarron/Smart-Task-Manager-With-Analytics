@@ -4,10 +4,10 @@ import type { ILoginErrors } from "../types/errors";
 import { VALID_EMAIL } from "../utils/Validations";
 import { supabase } from "../config/supabase";
 import { Input } from "../components/Input";
+import { SESSION_STORAGE_NAME } from "../utils/constants";
 
 export const LoginPage = () => {
-  const SESSION_STORAGE_NAME = "JWT";
-
+  
   const [form, setForm] = useState<ILogin>({ email: "", password: "" });
 
   const [errors, setErrors] = useState<ILoginErrors>({
@@ -42,11 +42,14 @@ export const LoginPage = () => {
         email: form.email,
         password: form.password,
       });
+
       if (error) throw error;
+
+      console.log(data);
 
       sessionStorage.setItem(SESSION_STORAGE_NAME, data.session.access_token);
 
-      return data.session.access_token;
+      return window.location.href = "/";
     }
   };
 

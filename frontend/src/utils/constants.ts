@@ -1,0 +1,5 @@
+const SESSION_STORAGE_NAME = "JWT";
+
+export {
+    SESSION_STORAGE_NAME
+}
